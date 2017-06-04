@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
 	public Igrac[] igrac;
 	public GameObject[] put;
 	public CameraController kamera;
-	public GameObject kocka;
+	public Kocka kocka;
 	public Dropdown dropdownListFigure;
 	public Text text;
 	public Text pobjedaText;
@@ -39,11 +39,10 @@ public class GameManager : MonoBehaviour {
 
 	//inicijalizacija
 	void Start () {
-
 		//postavljanje pocetnih pozicija figura
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				igrac [i].figure [j].startPozicija = igrac [i].figure [j].figura.transform;
+				igrac [i].figure [j].startPozicija = igrac [i].figure [j].figura.transform.position;
 				igrac [i].figure [j].zeljenaPozicija = igrac [i].figure [j].figura.transform.position;
 			}
 		}
@@ -63,10 +62,9 @@ public class GameManager : MonoBehaviour {
 		igrac [1].zadnjiSlobodanIzlazni = 3;
 
 		//postavljanje vremena cekanja
-		waitKocka = new WaitForSeconds (2);
+		waitKocka = new WaitForSeconds (1);
 		waitKamera = new WaitForSeconds(1.2f);
 		waitNakonPomaka = new WaitForSeconds (1f);
-
 
 		//pokretanje igre
 		StartCoroutine (gameloop ());
@@ -74,7 +72,7 @@ public class GameManager : MonoBehaviour {
 
 	//main funkcija
 	private IEnumerator gameloop(){
-		
+
 		yield return StartCoroutine (turn ());
 
 		//pogledaj da li postoji pobjednik, ako da ipisi ga, ako ne idemo dalje
@@ -175,12 +173,22 @@ public class GameManager : MonoBehaviour {
 	//bacanje kocke (duh...)
 	private IEnumerator bacanjeKocke(){
 		//pomakni kameru na kocku, odradi random, ispisi kolko je dobiveno na "kocki" jer jos nisam napravil da se kocka vrti
-		kamera.changeTarget (kocka);
+		kamera.changeTarget (kocka.kocka);
 		brojMjesta = Random.Range (1, 7);
 		text.text = brojMjesta.ToString();
 
-		//pricekaj par sekundi dok se kocka izvrti
+		//vrtnja kocke
+		kocka.rotiraj (1);
 		yield return waitKocka;
+		kocka.rotiraj (0.5f);
+		yield return waitKocka;
+		kocka.rotiraj (0.25f);
+		yield return waitKocka;
+		kocka.naBroj (brojMjesta);
+		kocka.rotiraj (0);
+		yield return waitKocka;
+
+		kamera.changeTarget(GameObject.Find("Center"));
 	}
 		
 	private IEnumerator cekanjeKamere(){

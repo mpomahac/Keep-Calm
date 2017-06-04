@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class Figura :MonoBehaviour{
+public class Figura : MonoBehaviour{
 
 	//referenca na model figure
 	public GameObject figura;
@@ -14,7 +14,7 @@ public class Figura :MonoBehaviour{
 	//zeljenaPozicija - koordinate pozicije na koju bi figura trebala doc, jednaka startnoj do prvog pomaka figure
 	//naStartu /naCilju - bool vrijednosti da li je figura na pocetnoj / krajnjoj poziciji
 	//trenutniStup - index stupa na kojem se figura trenutno nalazi
-	[HideInInspector]public Transform startPozicija;
+	[HideInInspector]public Vector3 startPozicija;
 	[HideInInspector]public Vector3 zeljenaPozicija;
 	[HideInInspector]public bool naStartu = true;
 	[HideInInspector]public bool naCilju=false;
@@ -36,7 +36,8 @@ public class Figura :MonoBehaviour{
 
 	//instantno resetira figuru na startnu poziciju, teleportira ju
 	public void reset(){
-		figura.transform.position = startPozicija.position;
+		figura.transform.position = startPozicija;
+		zeljenaPozicija = startPozicija;
 		naStartu = true;
 		trenutniStup = -1;
 	}

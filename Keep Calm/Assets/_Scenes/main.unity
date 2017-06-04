@@ -1573,7 +1573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 98921676}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -3270,7 +3270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 259356638}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -5766,7 +5766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 427600346}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -5906,6 +5906,19 @@ GameObject:
   m_PrefabParentObject: {fileID: 1767017702049286, guid: 5f835c3ec3687994e82aa7534564cb43,
     type: 2}
   m_PrefabInternal: {fileID: 1630586925}
+--- !u!114 &435180458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 435180452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba6d17d462aed64ba14e4e881492f33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kocka: {fileID: 435180452}
+  speed: 0
 --- !u!4 &448958492 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4541890835110552, guid: f39735242fdd2834b9c1db5acc06a4b6,
@@ -5981,7 +5994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 456309976}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -7655,7 +7668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 533784251}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -8310,7 +8323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 571062404}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -11014,7 +11027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 782300476}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -13568,7 +13581,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &967510897
 Prefab:
@@ -13736,7 +13749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 992054962}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -15823,7 +15836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 1140289801}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -15848,7 +15861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 1146049071}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -16249,7 +16262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 1167053297}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -17642,7 +17655,7 @@ RectTransform:
   - {fileID: 2028783643}
   - {fileID: 528091769}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -19654,7 +19667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 1439208236}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -20027,7 +20040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 1462377047}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -20748,7 +20761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 1518972960}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -22317,7 +22330,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4487764904165414, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4487764904165414, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
       propertyPath: m_LocalRotation.y
@@ -22325,7 +22338,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4487764904165414, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4487764904165414, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
       propertyPath: m_LocalRotation.w
@@ -22333,7 +22346,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4487764904165414, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1767017702049286, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
       propertyPath: m_Name
@@ -22355,6 +22368,18 @@ Prefab:
         type: 2}
       propertyPath: m_IsKinematic
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487764904165414, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487764904165414, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487764904165414, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
@@ -23473,7 +23498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 1691823904}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
@@ -25210,7 +25235,7 @@ MonoBehaviour:
   - {fileID: 1818098412}
   - {fileID: 322335963}
   kamera: {fileID: 475740580}
-  kocka: {fileID: 435180452}
+  kocka: {fileID: 435180458}
   dropdownListFigure: {fileID: 456712705}
   text: {fileID: 2028783644}
   pobjedaText: {fileID: 528091770}
@@ -26941,7 +26966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figura: {fileID: 1972866897}
-  startPozicija: {fileID: 0}
+  startPozicija: {x: 0, y: 0, z: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
