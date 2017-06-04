@@ -427,6 +427,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 92e2ffc24d061c945a0abdc75f3a9f8a, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -773,6 +777,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bd39bde25a770434b9c5fcc0e36f9bf5, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -959,6 +967,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 22939c1dc157d944bb570baca75b1776, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -1572,12 +1584,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 98921676}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!4 &98921681 stripped
 Transform:
   m_PrefabParentObject: {fileID: 408730, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -3269,12 +3282,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 259356638}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &259638877
 Prefab:
   m_ObjectHideFlags: 0
@@ -5765,12 +5779,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 427600346}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &428425603
 Prefab:
   m_ObjectHideFlags: 0
@@ -5993,12 +6008,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 456309976}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &456634231
 Prefab:
   m_ObjectHideFlags: 0
@@ -7041,6 +7057,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 22939c1dc157d944bb570baca75b1776, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -7667,12 +7687,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 533784251}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &534388287
 Prefab:
   m_ObjectHideFlags: 0
@@ -8322,12 +8343,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 571062404}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &571618664
 Prefab:
   m_ObjectHideFlags: 0
@@ -8842,6 +8864,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 054c990645738e045bacf20693226b90, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -11026,12 +11052,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 782300476}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &785777664
 Prefab:
   m_ObjectHideFlags: 0
@@ -11693,6 +11720,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bd39bde25a770434b9c5fcc0e36f9bf5, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -13292,6 +13323,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 92e2ffc24d061c945a0abdc75f3a9f8a, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -13748,12 +13783,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 992054962}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &1002641770
 Prefab:
   m_ObjectHideFlags: 0
@@ -13899,6 +13935,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 054c990645738e045bacf20693226b90, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -14646,6 +14686,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 92e2ffc24d061c945a0abdc75f3a9f8a, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -14839,6 +14883,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 054c990645738e045bacf20693226b90, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -15835,12 +15883,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 1140289801}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1 &1146049071 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 149790, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -15860,12 +15909,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 1146049071}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &1146253801
 Prefab:
   m_ObjectHideFlags: 0
@@ -16261,12 +16311,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 1167053297}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &1173420078
 Prefab:
   m_ObjectHideFlags: 0
@@ -17510,6 +17561,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 22939c1dc157d944bb570baca75b1776, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -17851,6 +17906,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bd39bde25a770434b9c5fcc0e36f9bf5, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -19255,6 +19314,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 22939c1dc157d944bb570baca75b1776, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -19666,12 +19729,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 1439208236}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &1443917240
 Prefab:
   m_ObjectHideFlags: 0
@@ -20039,12 +20103,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 1462377047}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &1467646262
 Prefab:
   m_ObjectHideFlags: 0
@@ -20506,6 +20571,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 054c990645738e045bacf20693226b90, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -20760,12 +20829,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 1518972960}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1 &1526502505
 GameObject:
   m_ObjectHideFlags: 0
@@ -22322,7 +22392,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4487764904165414, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 6.3
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 4487764904165414, guid: 5f835c3ec3687994e82aa7534564cb43, type: 2}
       propertyPath: m_LocalPosition.z
@@ -23497,12 +23567,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 1691823904}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!4 &1692010206 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4541890835110552, guid: f39735242fdd2834b9c1db5acc06a4b6,
@@ -25239,6 +25310,7 @@ MonoBehaviour:
   dropdownListFigure: {fileID: 456712705}
   text: {fileID: 2028783644}
   pobjedaText: {fileID: 528091770}
+  trenutniIgracText: {fileID: 0}
 --- !u!4 &1850973051
 Transform:
   m_ObjectHideFlags: 0
@@ -25607,6 +25679,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bd39bde25a770434b9c5fcc0e36f9bf5, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -26252,6 +26328,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 92e2ffc24d061c945a0abdc75f3a9f8a, type: 2}
+    - target: {fileID: 9579096, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3daa7cbf9ed797b4baff8f6ac824d98f, type: 2}
     m_RemovedComponents:
     - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
     - {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
@@ -26965,12 +27045,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4a4567a053904e833290eb0298f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  figura: {fileID: 1972866897}
-  startPozicija: {x: 0, y: 0, z: 0}
+  startPozicija: {fileID: 0}
   zeljenaPozicija: {x: 0, y: 0, z: 0}
   naStartu: 1
   naCilju: 0
   trenutniStup: -1
+  udaljenostX: 0
+  udaljenostZ: 0
 --- !u!1001 &1975325437
 Prefab:
   m_ObjectHideFlags: 0
