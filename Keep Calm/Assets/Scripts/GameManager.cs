@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
 	//gumbZaBacanje - bool vrijednost za prekid cekanja da neko stisne gumb i baci "kocku", pogledaj gore za navodnike
 	//pomakniFiguru - index odabrane figure, dok je -1 ceka se odabir
 	//pobjednik - self explanatory
-	public int trenutniIgrac = 0;
+	private int trenutniIgrac = 0;
 	private WaitForSeconds waitKocka;
 	private WaitForSeconds waitKamera;
 	private WaitForSeconds waitNakonPomaka;
@@ -42,10 +42,24 @@ public class GameManager : MonoBehaviour {
 	private bool bacanjeRed = true;
 	private int bacanjeRedMax = 0;
 	private int prviIgracIndex = 0;
+	private string[] imenaIgraca;
+	private InputField imeIgraca1;
+	private InputField imeIgraca2;
+	private InputField imeIgraca3;
+	private InputField imeIgraca4;
 
 	//inicijalizacija
 	void Start () {
 
+		GameObject.Find ("ImeIgraca1").SetActive (false);
+		GameObject.Find ("ImeIgraca2").SetActive (false);
+		GameObject.Find ("ImeIgraca3").SetActive (false);
+		GameObject.Find ("ImeIgraca4").SetActive (false);
+		GameObject.Find ("TextIme1").SetActive (false);
+		GameObject.Find ("TextIme2").SetActive (false);
+		GameObject.Find ("TextIme3").SetActive (false);
+		GameObject.Find ("TextIme4").SetActive (false);
+		GameObject.Find ("Pocni").SetActive (false);
 		dropdownListFigure.gameObject.SetActive (false);
 		buttonBaci = GameObject.Find ("Button");
 		buttonBaci.SetActive (false);
@@ -257,40 +271,6 @@ public class GameManager : MonoBehaviour {
 		}
 
 		gumbZaBacanje = false;
-
-
-
-
-		/*if (bacanjeRed && brojMjesta > bacanjeRedMax) {
-			prviIgracIndex = trenutniIgrac;
-			bacanjeRedMax = brojMjesta;
-		} else if (bacanjeRed && brojMjesta == bacanjeRedMax) {
-			gumbZaBacanje = false;
-			yield return StartCoroutine (turn ());
-		}
-		if (!bacanjeRed) {
-			if (brojMjesta == 6) {
-				igrac [trenutniIgrac].prvoBacanje = false;
-				yield return StartCoroutine (turn ());
-			}
-		}
-		yield return StartCoroutine (cekanjeKamere ());
-		if (igrac [trenutniIgrac].brojBacanja == 0) {
-			if (bacanjeRed)
-				igrac [trenutniIgrac].prvoBacanje = true;
-			else if (igrac [trenutniIgrac].prvoBacanje)
-				igrac [trenutniIgrac].prvoBacanje = false;
-			trenutniIgrac++;
-		}
-		if (trenutniIgrac >= brojIgraca) {
-			if (bacanjeRed)
-				bacanjeRed = false;
-			trenutniIgrac = 0;
-		}
-		if (!bacanjeRed)
-			trenutniIgrac = prviIgracIndex;
-		gumbZaBacanje = false;*/
-
 		//kraj funkcije, nazad u gameloop
 	}
 
@@ -407,8 +387,20 @@ public class GameManager : MonoBehaviour {
 		GameObject.Find ("BrojIgraca2").SetActive (false);
 		GameObject.Find ("BrojIgraca3").SetActive (false);
 		GameObject.Find ("BrojIgraca4").SetActive (false);
-		buttonBaci.SetActive (true);
-		dropdownListFigure.gameObject.SetActive (true);
+		GameObject.Find ("ImeIgraca1").SetActive (true);
+		GameObject.Find ("ImeIgraca2").SetActive (true);
+		GameObject.Find ("ImeIgraca3").SetActive (false);
+		GameObject.Find ("ImeIgraca4").SetActive (false);
+		GameObject.Find ("TextIme1").SetActive (true);
+		GameObject.Find ("TextIme2").SetActive (true);
+		GameObject.Find ("TextIme3").SetActive (false);
+		GameObject.Find ("TextIme4").SetActive (false);
+		GameObject.Find ("Pocni").SetActive (true);
+		imeIgraca1 = GameObject.Find("ImeIgraca1").GetComponent<InputField>();
+		imeIgraca2 = GameObject.Find("ImeIgraca2").GetComponent<InputField>();
+		imenaIgraca = new string[2];
+		buttonBaci.SetActive (false);
+		dropdownListFigure.gameObject.SetActive (false);
 	}
 
 	public void brojIgraca3(){
@@ -416,8 +408,21 @@ public class GameManager : MonoBehaviour {
 		GameObject.Find ("BrojIgraca2").SetActive (false);
 		GameObject.Find ("BrojIgraca3").SetActive (false);
 		GameObject.Find ("BrojIgraca4").SetActive (false);
-		buttonBaci.SetActive (true);
-		dropdownListFigure.gameObject.SetActive (true);
+		GameObject.Find ("ImeIgraca1").SetActive (true);
+		GameObject.Find ("ImeIgraca2").SetActive (true);
+		GameObject.Find ("ImeIgraca3").SetActive (true);
+		GameObject.Find ("ImeIgraca4").SetActive (false);
+		GameObject.Find ("TextIme1").SetActive (true);
+		GameObject.Find ("TextIme2").SetActive (true);
+		GameObject.Find ("TextIme3").SetActive (true);
+		GameObject.Find ("TextIme4").SetActive (false);
+		GameObject.Find ("Pocni").SetActive (true);
+		imeIgraca1 = GameObject.Find("ImeIgraca1").GetComponent<InputField>();
+		imeIgraca2 = GameObject.Find("ImeIgraca2").GetComponent<InputField>();
+		imeIgraca3 = GameObject.Find("ImeIgraca3").GetComponent<InputField>();
+		imenaIgraca = new string[3];
+		buttonBaci.SetActive (false);
+		dropdownListFigure.gameObject.SetActive (false);
 	}
 
 	public void brojIgraca4(){
@@ -425,6 +430,40 @@ public class GameManager : MonoBehaviour {
 		GameObject.Find ("BrojIgraca2").SetActive (false);
 		GameObject.Find ("BrojIgraca3").SetActive (false);
 		GameObject.Find ("BrojIgraca4").SetActive (false);
+		GameObject.Find ("ImeIgraca1").SetActive (true);
+		GameObject.Find ("ImeIgraca2").SetActive (true);
+		GameObject.Find ("ImeIgraca3").SetActive (true);
+		GameObject.Find ("ImeIgraca4").SetActive (true);
+		GameObject.Find ("TextIme1").SetActive (true);
+		GameObject.Find ("TextIme2").SetActive (true);
+		GameObject.Find ("TextIme3").SetActive (true);
+		GameObject.Find ("TextIme4").SetActive (true);
+		GameObject.Find ("Pocni").SetActive (true);
+		imeIgraca1 = GameObject.Find("ImeIgraca1").GetComponent<InputField>();
+		imeIgraca2 = GameObject.Find("ImeIgraca2").GetComponent<InputField>();
+		imeIgraca3 = GameObject.Find("ImeIgraca3").GetComponent<InputField>();
+		imeIgraca4 = GameObject.Find("ImeIgraca4").GetComponent<InputField>();
+		imenaIgraca = new string[4];
+		buttonBaci.SetActive (false);
+		dropdownListFigure.gameObject.SetActive (false);
+	}
+
+	public void upisiImena(){
+		for (int i = 0; i < imenaIgraca.Length; i++) {
+			imenaIgraca[i] = GameObject.Find ("ImeIgraca" + i).GetComponent<InputField> ().text;
+		}
+		GameObject.Find ("BrojIgraca2").SetActive (false);
+		GameObject.Find ("BrojIgraca3").SetActive (false);
+		GameObject.Find ("BrojIgraca4").SetActive (false);
+		GameObject.Find ("ImeIgraca1").SetActive (false);
+		GameObject.Find ("ImeIgraca2").SetActive (false);
+		GameObject.Find ("ImeIgraca3").SetActive (false);
+		GameObject.Find ("ImeIgraca4").SetActive (false);
+		GameObject.Find ("TextIme1").SetActive (false);
+		GameObject.Find ("TextIme2").SetActive (false);
+		GameObject.Find ("TextIme3").SetActive (false);
+		GameObject.Find ("TextIme4").SetActive (false);
+		GameObject.Find ("Pocni").SetActive (false);
 		buttonBaci.SetActive (true);
 		dropdownListFigure.gameObject.SetActive (true);
 	}
