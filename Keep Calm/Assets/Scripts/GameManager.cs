@@ -672,10 +672,7 @@ public class GameManager : MonoBehaviour {
 
 		backButton.SetActive (false);
 	}
-
-	//naredni dio koda se ne koristi u igri, sluzi iskljucivo za salu
-	//mala sala za kraj :)
-	//try it
+		
 	void Update (){
 		if ((Input.GetKey (KeyCode.RightControl) || Input.GetKey (KeyCode.LeftControl)) && Input.GetKeyDown (KeyCode.W)) {
 			if (win.activeSelf) {
@@ -683,6 +680,13 @@ public class GameManager : MonoBehaviour {
 			} else {
 				win.SetActive (true);
 			}
+		}
+
+		if (Input.GetKey (KeyCode.Escape)) {
+			if (quitButton.activeSelf)
+				quitButton.SetActive (false);
+			else
+				quitButton.SetActive (true);
 		}
 	}
 }
