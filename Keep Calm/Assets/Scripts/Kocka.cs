@@ -22,7 +22,7 @@ public class Kocka : MonoBehaviour {
 		transform.Rotate (new Vector3 (45, 45, 45) * speed);
 
 		if (speed == 0) {
-			transform.rotation = Quaternion.Slerp (transform.rotation, ciljnaRotacija, Time.deltaTime);
+			transform.rotation = Quaternion.Slerp (transform.rotation, ciljnaRotacija, 0.1f);
 		}
 	}
 

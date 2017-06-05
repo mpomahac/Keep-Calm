@@ -14,8 +14,10 @@ public class Figura :MonoBehaviour{
 	[HideInInspector]public Vector3 startPozicija;
 	[HideInInspector]public Vector3 zeljenaPozicija;
 	[HideInInspector]public bool naStartu = true;
+	[HideInInspector]public bool uKucici = false;
 	[HideInInspector]public bool naCilju=false;
 	[HideInInspector]public int trenutniStup = -1;
+	[HideInInspector]public int trenutniIzlazniStup=-1;
 	[HideInInspector]public float udaljenostX;
 	[HideInInspector]public float udaljenostZ;
 
@@ -68,6 +70,7 @@ public class Figura :MonoBehaviour{
 		transform.position = startPozicija;
 		zeljenaPozicija = startPozicija;
 		transform.eulerAngles = new Vector3 (0, 0, 0);
+		ciljnaRotacija = transform.rotation;
 		naStartu = true;
 		trenutniStup = -1;
 	}

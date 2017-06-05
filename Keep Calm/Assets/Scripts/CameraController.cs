@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour{
 
 	//offset - udaljenost kamere od objekta fokusa
 	//pozicijaKamere - trenutna pozicija kamere
+	//rotacija - 
 	private Vector3 offset;
 	private Transform pozicijaKamere;
 	private Quaternion rotacija;
