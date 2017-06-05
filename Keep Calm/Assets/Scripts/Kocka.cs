@@ -5,12 +5,12 @@ using UnityEngine;
 public class Kocka : MonoBehaviour {
 
 	//kocka - referenca na kocku
-	//speed - brzina rotacije, skrivena u editoru / inspektoru
 	public GameObject kocka;
-	[HideInInspector]public float speed;
 
-	//ciljnaRotacija - polozaj u kojem je dobiveni broj na gornjoj strani kocke
+	//ciljnaRotacija - zeljena rotacija / smjer gledanja kocke
+	//speed - brzina rotacije
 	private Quaternion ciljnaRotacija;
+	private float speed;
 
 	//postavljanje ciljne rotacije na pocetnu
 	void Start(){
@@ -31,7 +31,7 @@ public class Kocka : MonoBehaviour {
 		speed = brzina;
 	}
 
-	//postavljanje ciljne rotacije s obzirom na dobiveni broj
+	//postavljanje ciljne rotacije s obzirom na dobiveni broj tako da je dobiveni broj na gornjoj strani kocke
 	public void naBroj (int x){
 		switch (x) {
 		case 1:

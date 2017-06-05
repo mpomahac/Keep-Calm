@@ -5,11 +5,11 @@ using UnityEngine;
 public class CameraController : MonoBehaviour{
 
 	//target - objekt na koji se kamera fokusira
-	private GameObject target;
-
 	//offset - udaljenost kamere od objekta fokusa
 	//pozicijaKamere - trenutna pozicija kamere
-	//rotacija - 
+	//rotacija - zeljeni smjer pogleda kamere
+	//trenutnaRotacija - trenutni smjer pogleda kamere, koristi se isključivo za zoom na kocku
+	private GameObject target;
 	private Vector3 offset;
 	private Transform pozicijaKamere;
 	private Quaternion rotacija;
@@ -19,14 +19,17 @@ public class CameraController : MonoBehaviour{
 	//vrijednost se postavlja / mijenja automatski
 	private Vector3 speed;
 
+	//postavlja zeljenu rotaciju na trenutnu
 	void Start(){
 		rotacija = transform.rotation;
 	}
 
-	//pomice kameru na potrebnu poziciju tijekom cca. 0.5s
+	//pomice kameru na potrebnu poziciju tijekom cca. 0.5s i rotira ju prema centru
 	void Update () {
 		if (target.name == "Center") {
 			offset = new Vector3 (0, 17, -17);
+			rotacija.eulerAngles = new Vector3 (45, 0, 0);
+			trenutnaRotacija = new Vector3 (45, 0, 0);
 		} else if (target.name == "FokusKamereCrveni") {
 			offset = new Vector3 (12, 15, -12);
 			rotacija.eulerAngles = new Vector3 (45, -45, 0);

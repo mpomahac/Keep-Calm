@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	//igrac - lista igraca, popunjena iz editora / inspektora
-	//put - lista stupova popunjena iz editora / inspektora JER IH JE IZ NEKOG RAZLOGA BACALO NASUMICNO MAJKU MU JEBEM TREBA MI PO 5 MIN DA IH SVE POSPAJAM
+	//put - lista stupova popunjena iz editora / inspektora
 	//kamera - referenca na kameru
-	//kocka - referenca na kocku, trenutno sluzi samo za zoom kamere na nju, jos se ne vrti
+	//kocka - referenca na kocku
 	//dropdownListFigure - referenca na dropdown listu za odabir figure
-	//text - ispisuje broj dobiven na kocki, privremeno rjesenje dok ne sredim kocku
 	//pobjedaText - ispisuje pobjednika
+	//trenutniIgracText - ispisuje koji je igrac trenutno na potezu
 	public Igrac[] igrac;
 	public GameObject[] put;
 	public CameraController kamera;
@@ -21,13 +21,20 @@ public class GameManager : MonoBehaviour {
 	public Text trenutniIgracText;
 
 	//trenutniIgrac - index igraca koji je trenutno na potezu, 0 - 3
-	//waitKocka - vrijeme cekanja da se kocka izvrti, skraceno na 2s dok ne sredim kocku, bit ce 5-6
+	//waitKocka - vrijeme cekanja izmedju promjena brzine vrtnje kocke
 	//waitKamera - vrijeme cekanja da kamera stigne do sljedece mete
-	//waitNakonPomaka - vrijeme cekanja nakon pomaka, nisam siguran kolko je potrebno sad kad sam rijesil neke od gresaka
-	//brojMjesta - broj dobiven na "kocki", maknut cu navodnike kad sredim kocku
-	//gumbZaBacanje - bool vrijednost za prekid cekanja da neko stisne gumb i baci "kocku", pogledaj gore za navodnike
+	//waitNakonPomaka - vrijeme cekanja nakon pomaka
+	//waitNakonReda -
+	//brojMjesta - broj dobiven na kocki
+	//gumbZaBacanje - bool vrijednost za prekid cekanja da neko stisne gumb i baci kocku
 	//pomakniFiguru - index odabrane figure, dok je -1 ceka se odabir
-	//pobjednik - self explanatory
+	//pobjednik - podaci o pobjedniku
+	//brojIgraca - 
+	//buttonBaci - referenca na gumb za bacanje kocke
+	//bacanjeRed -
+	//bacanjeRedMax -
+	//prviIgracIndex -
+	//kreni -
 	private int trenutniIgrac = 0;
 	private WaitForSeconds waitKocka;
 	private WaitForSeconds waitKamera;
@@ -44,6 +51,8 @@ public class GameManager : MonoBehaviour {
 	private int prviIgracIndex = 0;
 	private bool kreni=false;
 
+	//imenaIgraca - lista imena igraca
+	//reference na interface elemente za odabir broja igraca, unos imena igraca, pokretanje igre, reset, vracanje natrag u izborniku, izlazak iz igre
 	private string[] imenaIgraca = { "", "", "", "" };
 	private GameObject imeIgraca1;
 	private GameObject imeIgraca2;
@@ -53,16 +62,22 @@ public class GameManager : MonoBehaviour {
 	private GameObject textImeIgraca2;
 	private GameObject textImeIgraca3;
 	private GameObject textImeIgraca4;
+	private GameObject brojIgraca2Button;
+	private GameObject brojIgraca3Button;
+	private GameObject brojIgraca4Button;
 	private GameObject pocni;
 	private GameObject quitButton;
 	private GameObject win;
 	private GameObject resetButton;
+	private GameObject backButton;
 
 	//inicijalizacija
 	void Start () {
 
+		//postavljanje referenci na objekte
 		win = GameObject.Find ("Win");
 		resetButton = GameObject.Find ("ResetButton");
+		backButton = GameObject.Find ("BackButton");
 		imeIgraca1 = GameObject.Find ("ImeIgraca1");
 		imeIgraca2 = GameObject.Find ("ImeIgraca2");
 		imeIgraca3 = GameObject.Find ("ImeIgraca3");
@@ -71,12 +86,17 @@ public class GameManager : MonoBehaviour {
 		textImeIgraca2 = GameObject.Find ("TextIme2");
 		textImeIgraca3 = GameObject.Find ("TextIme3");
 		textImeIgraca4 = GameObject.Find ("TextIme4");
+		brojIgraca2Button = GameObject.Find ("BrojIgraca2");
+		brojIgraca3Button = GameObject.Find ("BrojIgraca3");
+		brojIgraca4Button=GameObject.Find("BrojIgraca4");
 		pocni = GameObject.Find ("Pocni");
 		quitButton = GameObject.Find ("QuitButton");
-		dropdownListFigure.gameObject.SetActive (false);
 		buttonBaci = GameObject.Find ("Button");
-		buttonBaci.SetActive (false);
 
+		//gasenje trenutno nepotrebnih objekata
+		win.SetActive (false);
+		resetButton.SetActive (false);
+		backButton.SetActive (false);
 		imeIgraca1.SetActive (false);
 		imeIgraca2.SetActive (false);
 		imeIgraca3.SetActive (false);
@@ -86,8 +106,9 @@ public class GameManager : MonoBehaviour {
 		textImeIgraca3.SetActive (false);
 		textImeIgraca4.SetActive (false);
 		pocni.SetActive (false);
-		win.SetActive (false);
-		resetButton.SetActive (false);
+		buttonBaci.SetActive (false);
+		dropdownListFigure.gameObject.SetActive (false);
+
 		//postavljanje pocetnih pozicija figura
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -96,7 +117,7 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 
-		//postavljanje osnovnih stupova (ulazni, izlazni, broj slobodnih u cilju) - razlog zašto se tu rikta broj slobodnih: NEŠTO GA JE JEBALO PA JE ON JEBAL MENE SAT VREMENA PA SAM JA SJEBAL NJEGA
+		//postavljanje osnovnih stupova (ulazni, izlazni, broj slobodnih u cilju)
 		igrac [0].izlazniStup = 39;
 		igrac [0].ulazniStup = 1;
 		igrac [0].zadnjiSlobodanIzlazni = 3;
@@ -116,6 +137,7 @@ public class GameManager : MonoBehaviour {
 		waitNakonPomaka = new WaitForSeconds (2f);
 		waitNakonReda = new WaitForSeconds (1.2f);
 
+		//postavljanje kamere na centar
 		kamera.changeTarget (GameObject.Find ("Center"));
 
 		//pokretanje igre
@@ -125,13 +147,16 @@ public class GameManager : MonoBehaviour {
 	//main funkcija
 	private IEnumerator gameloop(){
 
+		//cekaj odabir broja igraca i pritisak na Kreni!
+		//nakon pokretanja prvog kruga ovaj dio se preskače
 		while (brojIgraca == 0 || !kreni) {
 			yield return null;
 		}
 
+		//pokreni krug i cekaj njegov kraj
 		yield return StartCoroutine (turn ());
 
-		//pogledaj da li postoji pobjednik, ako da ipisi ga, ako ne idemo dalje
+		//pogledaj da li postoji pobjednik, ako da ipisi ga, ako ne pokreni novi krug
 		if ((pobjednik = pobjeda ()) != null) {
 			pobjedaText.text = "Pobijedio je " + pobjednik.ime;
 			quitButton.SetActive (true);
@@ -141,7 +166,9 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	//
 	private IEnumerator turn(){
+		//promjena boje imena igraca u ispisu ovisno o boji igraca
 		string colorString="ffffffff";
 		switch (trenutniIgrac) {
 		case 0:
@@ -159,6 +186,7 @@ public class GameManager : MonoBehaviour {
 		}
 		trenutniIgracText.text ="Trenutno je na potezu <color=#"+colorString+">"+ imenaIgraca[trenutniIgrac]+"</color>";
 
+		//postavljanje kamere iznad startne pozicije igraca
 		kamera.changeTarget(GameObject.Find("FokusKamere"+igrac[trenutniIgrac].ime));
 
 		//cekaj da se stisne gumb za bacanje
@@ -166,21 +194,23 @@ public class GameManager : MonoBehaviour {
 			yield return null;
 		}
 
+		//
 		if (!bacanjeRed && igrac [trenutniIgrac].prvoBacanje) {
 			igrac [trenutniIgrac].brojBacanja = 3;
 			igrac [trenutniIgrac].prvoBacanje = false;
 		}
 
-		//pokreni bacanje "kocke" i cekaj da zavrsi
+		//pokreni bacanje kocke i cekaj da zavrsi
 		yield return StartCoroutine (bacanjeKocke ());
 
+		//
 		if (!bacanjeRed) {
-			//resetiraj listu figura koje se mogu pomaknut
+			//resetiraj listu figura koje se mogu pomaknuti
 			dropdownListFigure.ClearOptions ();
 			List<string> opcije = new List<string> ();
 			//standardna opcija
 			opcije.Add ("Odaberi figuru");
-			//pregledaj koje figure se smiju pomaknut i stavi ih u listu
+			//pregledaj koje figure se smiju pomaknuti i stavi ih u listu
 			if (eligable (igrac [trenutniIgrac].figure [0], 0))
 				opcije.Add (igrac [trenutniIgrac].figure [0].gameObject.name);
 			if (eligable (igrac [trenutniIgrac].figure [1], 1))
@@ -200,6 +230,7 @@ public class GameManager : MonoBehaviour {
 
 			//ako je odabrana figura pomakni ju, ako nije preskoci
 			if (pomakniFiguru != -1) {
+				//postavljanje kamere na figuru
 				kamera.changeTarget (igrac [trenutniIgrac].figure [pomakniFiguru].gameObject);
 				yield return StartCoroutine (cekanjeKamere ());
 
@@ -212,7 +243,7 @@ public class GameManager : MonoBehaviour {
 					igrac [trenutniIgrac].figure [pomakniFiguru].naStartu = false;
 					yield return StartCoroutine (cekanjePomaka ());
 				}
-				//ako moze uc u cilj, teleportira ju tamo, da se napravit da ide korak po korak ako ce radit probleme
+				//ako moze uci u kucicu, pomakni ju i provjeri da li je stigla u najdublje polje u kucici, ako je smanji index zadnjeg slobodnog polja u kucici za tog igraca
 				else if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup + brojMjesta - igrac [trenutniIgrac].izlazniStup == igrac [trenutniIgrac].zadnjiSlobodanIzlazni + 1 &&
 				         igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup <= igrac [trenutniIgrac].izlazniStup) {
 
@@ -261,7 +292,7 @@ public class GameManager : MonoBehaviour {
 						igrac [trenutniIgrac].figure [pomakniFiguru].naCilju = true;
 					}
 				}
-				//pomakni ju normalno, stup po stup
+				//pomakni figuru i promjeni podatke o njezino trenutnom polozaju
 				else {
 					for (int x = 1; x <= brojMjesta; x++) {
 						igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup += 1;
@@ -289,18 +320,18 @@ public class GameManager : MonoBehaviour {
 					}
 				}
 
-				//vidi jel doslo do sudara
+				//provjeri da li je neka figura vec na tom polju, ako je resetiraj ju
 				sudar (igrac [trenutniIgrac].figure [pomakniFiguru]);
 
+				//
 				igrac [trenutniIgrac].figure [pomakniFiguru].centriranje (put [igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup].transform);
-
 				yield return StartCoroutine (cekanjeReda ());
 			}
 		}
 
 
 
-		//resetira listu figura, resetira index odabrane figure, pomice kameru na centar, prebacuje na sljedeceg igraca, resetira gumb za bacanje
+		//resetiranje podataka prije ulaska u novi krug
 		dropdownListFigure.value = 0;
 		dropdownListFigure.ClearOptions();
 		pomakniFiguru = -1;
@@ -337,12 +368,13 @@ public class GameManager : MonoBehaviour {
 		}
 
 		gumbZaBacanje = false;
-		//kraj funkcije, nazad u gameloop
+
+		//kraj funkcije, povratak u gameloop
 	}
 
-	//bacanje kocke (duh...)
+	//bacanje kocke
 	private IEnumerator bacanjeKocke(){
-		//pomakni kameru na kocku, odradi random, ispisi kolko je dobiveno na "kocki" jer jos nisam napravil da se kocka vrti
+		//pomakni kameru na kocku, odradi random, zavrti kocku
 		kamera.changeTarget (kocka.kocka);
 		brojMjesta = Random.Range (1, 7);
 		
@@ -365,21 +397,27 @@ public class GameManager : MonoBehaviour {
 		yield return waitKocka;
 		kocka.rotiraj (0.2f);
 		yield return waitKocka;
+
+		//posalji kocki podatak o dobivenom broju
 		kocka.naBroj (brojMjesta);
 		kocka.rotiraj (0);
 		yield return waitNakonPomaka;
 
+		//postavljanje kamere iznad startne pozicije igraca
 		kamera.changeTarget(GameObject.Find("FokusKamere"+igrac[trenutniIgrac].ime));
 	}
-		
+
+	//
 	private IEnumerator cekanjeKamere(){
 		yield return waitKamera;
 	}
 
+	//
 	private IEnumerator cekanjePomaka(){
 		yield return waitNakonPomaka;
 	}
 
+	//
 	private IEnumerator cekanjeReda(){
 		yield return waitNakonReda;
 	}
@@ -391,7 +429,6 @@ public class GameManager : MonoBehaviour {
 
 	//detektira koja figura je odabrana za pomicanje
 	public void odaberiFiguru(){
-		//izgleda komplicirano al je zapravo jako jednostavno, uzme samo zadnji znak stringa
 		switch (dropdownListFigure.captionText.text.ToString ().Substring(dropdownListFigure.captionText.text.ToString().Length-1)) {
 		case "1":
 			pomakniFiguru = 0;
@@ -409,14 +446,16 @@ public class GameManager : MonoBehaviour {
 	}
 
 	//gleda da li je figuri dozvoljeno kretanje
-	//dozvoljeno je ako je figura na startu i dobiven je 6, ako figura nije na startu niti cilju i pomakom za dobiven broj ne prelazi izlazni stup,
-	//ako pomakom za dobiveni broj prelazi izlazni stup i ulazi u cilj
+	//dozvoljeno je ako:
+	//					figura je na startu i dobiven je 6, a niti jedna druga igraceva figura nije na ulaznom stupu
+	//					figura nije na startu niti cilju i niti jedna druga igraceva figura nije na zadnjem stupu na koji bi figura pomakom dosla
+	//					figura nije na startu niti cilju i pomakom nece preskociti zadnje slobodno polje u kucici
 	private bool eligable(Figura figura, int index){
 		if (figura.naStartu && brojMjesta == 6 && provjeraPozicije (figura, index))
 			return true;
 		else if (!figura.naStartu && !figura.naCilju && (figura.trenutniStup + brojMjesta <= igrac [trenutniIgrac].izlazniStup || figura.trenutniStup > igrac [trenutniIgrac].izlazniStup) && provjeraPozicije (figura, index))
 			return true;
-		else if (!figura.naStartu && !figura.naCilju && figura.trenutniStup + brojMjesta - igrac [trenutniIgrac].izlazniStup == igrac [trenutniIgrac].zadnjiSlobodanIzlazni + 1)
+		else if (!figura.naStartu && !figura.naCilju && figura.trenutniStup + brojMjesta - igrac [trenutniIgrac].izlazniStup <= igrac [trenutniIgrac].zadnjiSlobodanIzlazni + 1)
 			return true;
 		else if (figura.uKucici && brojMjesta+figura.trenutniIzlazniStup<=igrac[trenutniIgrac].zadnjiSlobodanIzlazni && provjeraKucice(figura))
 			return true;
@@ -424,6 +463,7 @@ public class GameManager : MonoBehaviour {
 			return false;
 	}
 
+	//provjerava da li igrac vec ima figuru na stupu na koji bi figura dosla pomakom
 	private bool provjeraPozicije(Figura figura, int index){
 		for (int i = 0; i < 4; i++) {
 			if (i != index) {
@@ -437,6 +477,7 @@ public class GameManager : MonoBehaviour {
 		return true;
 	}
 
+	//provjerava da li igrac vec ima figuru na polju u kucici na koje bi figura dosla pomakom
 	private bool provjeraKucice(Figura figura){
 		for (int i = 0; i < 4; i++) {
 			if (figura.trenutniIzlazniStup + brojMjesta == igrac [trenutniIgrac].figure [i].trenutniIzlazniStup)
@@ -459,7 +500,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	//pregledava da li neki od igraca ima ispunjen uvjet za pobjedu, broj slobodnih stupova u cilju 0 ili manje preko index zadnjeg slobodnog
+	//pregledava da li neki od igraca ima ispunjen uvjet za pobjedu, broj slobodnih polja u cilju manji od 0 preko indeksa zadnjeg slobodnog
 	private Igrac pobjeda(){
 		for (int i = 0; i < 4; i++) {
 			if (igrac [i].zadnjiSlobodanIzlazni < 0)
@@ -468,24 +509,27 @@ public class GameManager : MonoBehaviour {
 		return null;
 	}
 
+	//odabire 2 igraca
 	public void brojIgraca2(){
 		brojIgraca = 2;
-		GameObject.Find ("BrojIgraca2").SetActive (false);
-		GameObject.Find ("BrojIgraca3").SetActive (false);
-		GameObject.Find ("BrojIgraca4").SetActive (false);
+		brojIgraca2Button.SetActive (false);
+		brojIgraca3Button.SetActive (false);
+		brojIgraca4Button.SetActive (false);
 
 		imeIgraca1.SetActive (true);
 		imeIgraca2.SetActive (true);
 		textImeIgraca1.SetActive (true);
 		textImeIgraca2.SetActive (true);
 		pocni.SetActive (true);
+		backButton.SetActive (true);
 	}
 
+	//odabire 3 igraca
 	public void brojIgraca3(){
 		brojIgraca = 3;
-		GameObject.Find ("BrojIgraca2").SetActive (false);
-		GameObject.Find ("BrojIgraca3").SetActive (false);
-		GameObject.Find ("BrojIgraca4").SetActive (false);
+		brojIgraca2Button.SetActive (false);
+		brojIgraca3Button.SetActive (false);
+		brojIgraca4Button.SetActive (false);
 
 		imeIgraca1.SetActive (true);
 		imeIgraca2.SetActive (true);
@@ -494,13 +538,15 @@ public class GameManager : MonoBehaviour {
 		textImeIgraca2.SetActive (true);
 		textImeIgraca3.SetActive (true);
 		pocni.SetActive (true);
+		backButton.SetActive (true);
 	}
 
+	//odabire 4 igraca
 	public void brojIgraca4(){
 		brojIgraca = 4;
-		GameObject.Find ("BrojIgraca2").SetActive (false);
-		GameObject.Find ("BrojIgraca3").SetActive (false);
-		GameObject.Find ("BrojIgraca4").SetActive (false);
+		brojIgraca2Button.SetActive (false);
+		brojIgraca3Button.SetActive (false);
+		brojIgraca4Button.SetActive (false);
 
 		imeIgraca1.SetActive (true);
 		imeIgraca2.SetActive (true);
@@ -511,8 +557,10 @@ public class GameManager : MonoBehaviour {
 		textImeIgraca3.SetActive (true);
 		textImeIgraca4.SetActive (true);
 		pocni.SetActive (true);
+		backButton.SetActive (true);
 	}
 
+	//upisuje imena igraca u listu i započinje igru
 	public void upisiImena(){
 		switch (brojIgraca) {
 		case 2:
@@ -552,15 +600,18 @@ public class GameManager : MonoBehaviour {
 
 		pocni.SetActive (false);
 		quitButton.SetActive (false);
+		backButton.SetActive (false);
 		kreni = true;
 		buttonBaci.SetActive (true);
 		dropdownListFigure.gameObject.SetActive (true);
 	}
 
+	//gasi aplikaciju
 	public void quit(){
 		Application.Quit ();
 	}
 
+	//resetira igru vracanjem u glavni izbornik
 	public void reset (){
 		trenutniIgrac = 0;
 		kreni = false;
@@ -576,11 +627,53 @@ public class GameManager : MonoBehaviour {
 				igrac [i].figure [j].uKucici = false;
 				igrac [i].figure [j].trenutniIzlazniStup = -1;
 			}
+			igrac [i].brojBacanja = 1;
+			igrac [i].prvoBacanje = true;
 		}
+
+		win.SetActive (true);
+		resetButton.SetActive (true);
+		backButton.SetActive (true);
+		imeIgraca1.SetActive (true);
+		imeIgraca2.SetActive (true);
+		imeIgraca3.SetActive (true);
+		imeIgraca4.SetActive (true);
+		textImeIgraca1.SetActive (true);
+		textImeIgraca2.SetActive (true);
+		textImeIgraca3.SetActive (true);
+		textImeIgraca4.SetActive (true);
+		brojIgraca2Button.SetActive (true);
+		brojIgraca3Button.SetActive (true);
+		brojIgraca4Button.SetActive (true);
+		pocni.SetActive (true);
+		quitButton.SetActive (true);
+		buttonBaci.SetActive (true);
+
+		this.StopAllCoroutines ();
 
 		this.Start ();
 	}
 
+	//vraca na prethodni dio izbornika
+	public void back (){
+		brojIgraca2Button.SetActive (true);
+		brojIgraca3Button.SetActive (true);
+		brojIgraca4Button.SetActive (true);
+
+		if(imeIgraca1.activeSelf)imeIgraca1.SetActive (false);
+		if(imeIgraca2.activeSelf)imeIgraca2.SetActive (false);
+		if(imeIgraca3.activeSelf)imeIgraca3.SetActive (false);
+		if(imeIgraca4.activeSelf)imeIgraca4.SetActive (false);
+		if(textImeIgraca1.activeSelf)textImeIgraca1.SetActive (false);
+		if(textImeIgraca2.activeSelf)textImeIgraca2.SetActive (false);
+		if(textImeIgraca3.activeSelf)textImeIgraca3.SetActive (false);
+		if(textImeIgraca4.activeSelf)textImeIgraca4.SetActive (false);
+		if(pocni.activeSelf)pocni.SetActive (false);
+
+		backButton.SetActive (false);
+	}
+
+	//naredni dio koda se ne koristi u igri, sluzi iskljucivo za salu
 	//mala sala za kraj :)
 	//try it
 	void Update (){
