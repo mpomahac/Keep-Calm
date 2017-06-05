@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
 	//gumbZaBacanje - bool vrijednost za prekid cekanja da neko stisne gumb i baci "kocku", pogledaj gore za navodnike
 	//pomakniFiguru - index odabrane figure, dok je -1 ceka se odabir
 	//pobjednik - self explanatory
-	private int trenutniIgrac = 0;
+	public int trenutniIgrac = 0;
 	private WaitForSeconds waitKocka;
 	private WaitForSeconds waitKamera;
 	private WaitForSeconds waitNakonPomaka;
@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour {
 	private Igrac pobjednik=null;
 	private int brojIgraca=0;
 	private GameObject buttonBaci;
+	private bool bacanjeRed = true;
+	private int bacanjeRedMax = 0;
+	private int prviIgracIndex = 0;
 
 	//inicijalizacija
 	void Start () {
@@ -87,7 +90,7 @@ public class GameManager : MonoBehaviour {
 		while (brojIgraca == 0) {
 			yield return null;
 		}
-			
+
 		yield return StartCoroutine (turn ());
 
 		//pogledaj da li postoji pobjednik, ako da ipisi ga, ako ne idemo dalje
@@ -124,90 +127,95 @@ public class GameManager : MonoBehaviour {
 			yield return null;
 		}
 
+		if (!bacanjeRed && igrac [trenutniIgrac].prvoBacanje) {
+			igrac [trenutniIgrac].brojBacanja = 3;
+			igrac [trenutniIgrac].prvoBacanje = false;
+		}
+
 		//pokreni bacanje "kocke" i cekaj da zavrsi
 		yield return StartCoroutine (bacanjeKocke ());
 
-		//resetiraj listu figura koje se mogu pomaknut
-		dropdownListFigure.ClearOptions ();
-		List<string> opcije= new List<string>();
-		//standardna opcija
-		opcije.Add ("Odaberi figuru");
-		//pregledaj koje figure se smiju pomaknut i stavi ih u listu
-		if (eligable (igrac [trenutniIgrac].figure [0], 0))
-			opcije.Add (igrac [trenutniIgrac].figure [0].gameObject.name);
-		if (eligable (igrac [trenutniIgrac].figure [1], 1))
-			opcije.Add (igrac [trenutniIgrac].figure [1].gameObject.name);
-		if (eligable (igrac [trenutniIgrac].figure [2], 2))
-			opcije.Add (igrac [trenutniIgrac].figure [2].gameObject.name);
-		if (eligable (igrac [trenutniIgrac].figure [3], 3))
-			opcije.Add (igrac [trenutniIgrac].figure [3].gameObject.name);
-		dropdownListFigure.AddOptions (opcije);
+		if (!bacanjeRed) {
+			//resetiraj listu figura koje se mogu pomaknut
+			dropdownListFigure.ClearOptions ();
+			List<string> opcije = new List<string> ();
+			//standardna opcija
+			opcije.Add ("Odaberi figuru");
+			//pregledaj koje figure se smiju pomaknut i stavi ih u listu
+			if (eligable (igrac [trenutniIgrac].figure [0], 0))
+				opcije.Add (igrac [trenutniIgrac].figure [0].gameObject.name);
+			if (eligable (igrac [trenutniIgrac].figure [1], 1))
+				opcije.Add (igrac [trenutniIgrac].figure [1].gameObject.name);
+			if (eligable (igrac [trenutniIgrac].figure [2], 2))
+				opcije.Add (igrac [trenutniIgrac].figure [2].gameObject.name);
+			if (eligable (igrac [trenutniIgrac].figure [3], 3))
+				opcije.Add (igrac [trenutniIgrac].figure [3].gameObject.name);
+			dropdownListFigure.AddOptions (opcije);
 
-		//cekaj dok se ne odabere figura, ako nijednoj nije dozvoljeno pomicanje nastavi dalje
-		while (pomakniFiguru==-1) {
-			if (dropdownListFigure.options.Count == 1)
-				break;
-			yield return null;
-		}
-
-		//ako je odabrana figura pomakni ju, ako nije preskoci
-		if (pomakniFiguru != -1) {
-			kamera.changeTarget (igrac [trenutniIgrac].figure [pomakniFiguru].gameObject);
-			yield return StartCoroutine (cekanjeKamere ());
-
-			//ako je na startu postavi ju na ulazni stup
-			if (igrac [trenutniIgrac].figure [pomakniFiguru].naStartu) {
-				float rotacija = (float)((trenutniIgrac - 1) * 90);
-				igrac [trenutniIgrac].figure [pomakniFiguru].move (put [igrac [trenutniIgrac].ulazniStup].transform, true);
-				igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup = igrac [trenutniIgrac].ulazniStup;
-				igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj(rotacija);
-				igrac [trenutniIgrac].figure [pomakniFiguru].naStartu = false;
-				yield return StartCoroutine (cekanjePomaka ());
+			//cekaj dok se ne odabere figura, ako nijednoj nije dozvoljeno pomicanje nastavi dalje
+			while (pomakniFiguru == -1) {
+				if (dropdownListFigure.options.Count == 1)
+					break;
+				yield return null;
 			}
-			//ako moze uc u cilj, teleportira ju tamo, da se napravit da ide korak po korak ako ce radit probleme
-			else if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup + brojMjesta - igrac [trenutniIgrac].izlazniStup == igrac [trenutniIgrac].zadnjiSlobodanIzlazni+1 &&
-				igrac[trenutniIgrac].figure[pomakniFiguru].trenutniStup<=igrac[trenutniIgrac].izlazniStup) {
 
-				igrac [trenutniIgrac].figure [pomakniFiguru].move (igrac [trenutniIgrac].izlazniStupovi [igrac [trenutniIgrac].zadnjiSlobodanIzlazni].transform, false);
-				igrac [trenutniIgrac].zadnjiSlobodanIzlazni--;
-				igrac [trenutniIgrac].figure [pomakniFiguru].naCilju = true;
-			}
-			//pomakni ju normalno, stup po stup
-			else {
-				for (int x = 1; x <= brojMjesta; x++) {
-					igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup += 1;
-					if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup >= 40)
-						igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup = 0;
-					
-					for (int i = 0; i < 4; i++) {
-						if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 1 + i * 10) {
-							igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
-							yield return StartCoroutine (cekanjeReda ());
-						}
-						else if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 9 + i * 10) {
-							igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
-							yield return StartCoroutine (cekanjeReda ());
-						}
-						else if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 5 + i * 10) {
-							igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (-90.0f);
-							yield return StartCoroutine (cekanjeReda ());
-						}
-					}
-					if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == igrac [trenutniIgrac].izlazniStup) {
-						igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
-						yield return StartCoroutine (cekanjeReda ());
-					}
-					igrac [trenutniIgrac].figure [pomakniFiguru].move (put [igrac [trenutniIgrac].figure[pomakniFiguru].trenutniStup].transform, false);
+			//ako je odabrana figura pomakni ju, ako nije preskoci
+			if (pomakniFiguru != -1) {
+				kamera.changeTarget (igrac [trenutniIgrac].figure [pomakniFiguru].gameObject);
+				yield return StartCoroutine (cekanjeKamere ());
+
+				//ako je na startu postavi ju na ulazni stup
+				if (igrac [trenutniIgrac].figure [pomakniFiguru].naStartu) {
+					float rotacija = (float)((trenutniIgrac - 1) * 90);
+					igrac [trenutniIgrac].figure [pomakniFiguru].move (put [igrac [trenutniIgrac].ulazniStup].transform, true);
+					igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup = igrac [trenutniIgrac].ulazniStup;
+					igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (rotacija);
+					igrac [trenutniIgrac].figure [pomakniFiguru].naStartu = false;
 					yield return StartCoroutine (cekanjePomaka ());
 				}
+				//ako moze uc u cilj, teleportira ju tamo, da se napravit da ide korak po korak ako ce radit probleme
+				else if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup + brojMjesta - igrac [trenutniIgrac].izlazniStup == igrac [trenutniIgrac].zadnjiSlobodanIzlazni + 1 &&
+				         igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup <= igrac [trenutniIgrac].izlazniStup) {
+
+					igrac [trenutniIgrac].figure [pomakniFiguru].move (igrac [trenutniIgrac].izlazniStupovi [igrac [trenutniIgrac].zadnjiSlobodanIzlazni].transform, false);
+					igrac [trenutniIgrac].zadnjiSlobodanIzlazni--;
+					igrac [trenutniIgrac].figure [pomakniFiguru].naCilju = true;
+				}
+				//pomakni ju normalno, stup po stup
+				else {
+					for (int x = 1; x <= brojMjesta; x++) {
+						igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup += 1;
+						if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup >= 40)
+							igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup = 0;
+						
+						for (int i = 0; i < 4; i++) {
+							if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 1 + i * 10) {
+								igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
+								yield return StartCoroutine (cekanjeReda ());
+							} else if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 9 + i * 10) {
+								igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
+								yield return StartCoroutine (cekanjeReda ());
+							} else if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 5 + i * 10) {
+								igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (-90.0f);
+								yield return StartCoroutine (cekanjeReda ());
+							}
+						}
+						if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == igrac [trenutniIgrac].izlazniStup) {
+							igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
+							yield return StartCoroutine (cekanjeReda ());
+						}
+						igrac [trenutniIgrac].figure [pomakniFiguru].move (put [igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup].transform, false);
+						yield return StartCoroutine (cekanjePomaka ());
+					}
+				}
+
+				//vidi jel doslo do sudara
+				sudar (igrac [trenutniIgrac].figure [pomakniFiguru]);
+
+				igrac [trenutniIgrac].figure [pomakniFiguru].centriranje (put [igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup].transform);
+
+				yield return StartCoroutine (cekanjeReda ());
 			}
-
-			//vidi jel doslo do sudara
-			sudar (igrac [trenutniIgrac].figure [pomakniFiguru]);
-
-			igrac [trenutniIgrac].figure [pomakniFiguru].centriranje (put [igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup].transform);
-
-			yield return StartCoroutine (cekanjeReda ());
 		}
 
 
@@ -217,11 +225,71 @@ public class GameManager : MonoBehaviour {
 		dropdownListFigure.ClearOptions();
 		pomakniFiguru = -1;
 		kamera.changeTarget(GameObject.Find("FokusKamere"+igrac[trenutniIgrac].ime));
-		yield return StartCoroutine (cekanjeKamere ());
-		if(brojMjesta != 6) trenutniIgrac++;
-		if (trenutniIgrac >= brojIgraca)
-			trenutniIgrac = 0;
+		igrac [trenutniIgrac].brojBacanja--;
+		StartCoroutine (cekanjeKamere ());
+		if (bacanjeRed) {
+			if (brojMjesta > bacanjeRedMax) {
+				prviIgracIndex = trenutniIgrac;
+				bacanjeRedMax = brojMjesta;
+			} else if (brojMjesta == bacanjeRedMax) {
+				igrac [trenutniIgrac].brojBacanja++;
+			}
+
+			if (igrac [trenutniIgrac].brojBacanja == 0) {
+				trenutniIgrac++;
+				if (trenutniIgrac >= brojIgraca) {
+					trenutniIgrac = prviIgracIndex;
+					bacanjeRed = false;
+				}
+			}
+		} else {
+			if (brojMjesta == 6) {
+				igrac [trenutniIgrac].brojBacanja = 1;
+			}
+				
+			if (igrac [trenutniIgrac].brojBacanja == 0) {
+				igrac [trenutniIgrac].brojBacanja = 1;
+				trenutniIgrac++;
+				if (trenutniIgrac >= brojIgraca) {
+					trenutniIgrac = 0;
+				}
+			}
+		}
+
 		gumbZaBacanje = false;
+
+
+
+
+		/*if (bacanjeRed && brojMjesta > bacanjeRedMax) {
+			prviIgracIndex = trenutniIgrac;
+			bacanjeRedMax = brojMjesta;
+		} else if (bacanjeRed && brojMjesta == bacanjeRedMax) {
+			gumbZaBacanje = false;
+			yield return StartCoroutine (turn ());
+		}
+		if (!bacanjeRed) {
+			if (brojMjesta == 6) {
+				igrac [trenutniIgrac].prvoBacanje = false;
+				yield return StartCoroutine (turn ());
+			}
+		}
+		yield return StartCoroutine (cekanjeKamere ());
+		if (igrac [trenutniIgrac].brojBacanja == 0) {
+			if (bacanjeRed)
+				igrac [trenutniIgrac].prvoBacanje = true;
+			else if (igrac [trenutniIgrac].prvoBacanje)
+				igrac [trenutniIgrac].prvoBacanje = false;
+			trenutniIgrac++;
+		}
+		if (trenutniIgrac >= brojIgraca) {
+			if (bacanjeRed)
+				bacanjeRed = false;
+			trenutniIgrac = 0;
+		}
+		if (!bacanjeRed)
+			trenutniIgrac = prviIgracIndex;
+		gumbZaBacanje = false;*/
 
 		//kraj funkcije, nazad u gameloop
 	}

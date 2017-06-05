@@ -20,4 +20,6 @@ public class Igrac {
 	[HideInInspector]public int izlazniStup;
 	[HideInInspector]public int ulazniStup;
 	[HideInInspector]public int zadnjiSlobodanIzlazni;
+	[HideInInspector]public int brojBacanja = 1;
+	[HideInInspector]public bool prvoBacanje = true;
 }

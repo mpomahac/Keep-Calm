@@ -27042,6 +27042,8 @@ MonoBehaviour:
     izlazniStup: 0
     ulazniStup: 0
     zadnjiSlobodanIzlazni: 0
+    brojBacanja: 1
+    prvoBacanje: 1
   - figure:
     - {fileID: 1146049076}
     - {fileID: 1518972965}
@@ -27056,6 +27058,8 @@ MonoBehaviour:
     izlazniStup: 0
     ulazniStup: 0
     zadnjiSlobodanIzlazni: 0
+    brojBacanja: 1
+    prvoBacanje: 1
   - figure:
     - {fileID: 259356643}
     - {fileID: 1691823909}
@@ -27070,6 +27074,8 @@ MonoBehaviour:
     izlazniStup: 0
     ulazniStup: 0
     zadnjiSlobodanIzlazni: 0
+    brojBacanja: 1
+    prvoBacanje: 1
   - figure:
     - {fileID: 571062409}
     - {fileID: 782300481}
@@ -27084,6 +27090,8 @@ MonoBehaviour:
     izlazniStup: 0
     ulazniStup: 0
     zadnjiSlobodanIzlazni: 0
+    brojBacanja: 1
+    prvoBacanje: 1
   put:
   - {fileID: 1666134952}
   - {fileID: 573164777}
@@ -27130,6 +27138,7 @@ MonoBehaviour:
   dropdownListFigure: {fileID: 456712705}
   pobjedaText: {fileID: 528091770}
   trenutniIgracText: {fileID: 2028783644}
+  trenutniIgrac: 0
 --- !u!4 &1850973051
 Transform:
   m_ObjectHideFlags: 0
