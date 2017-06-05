@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class Kocka : MonoBehaviour {
 
-	//kocka - referenca na kocku
-	public GameObject kocka;
+	//referenca na objekt kocke
+	/*---------------------------------------Varijable-----------------------------------------*/
+	public GameObject kocka;					//referenca na objekt kocke
 
-	//ciljnaRotacija - zeljena rotacija / smjer gledanja kocke
-	//speed - brzina rotacije
-	private Quaternion ciljnaRotacija;
-	private float speed;
+	private Quaternion ciljnaRotacija;			//željena završna rotacija kocke
+	private float speed;						//brzina rotacije kocke
 
 	//postavljanje ciljne rotacije na pocetnu
+	/*-----------------------------------------Metode------------------------------------------*/
+	//postavljanje željene rotacije na početnu rotaciju
 	void Start(){
 		ciljnaRotacija = transform.rotation;
 	}
 
-	//rotiranje
+	//izvršavanje rotacije
 	void Update () {
 		transform.Rotate (new Vector3 (45, 45, 45) * speed);
 

@@ -6,22 +6,14 @@ using System;
 [Serializable]
 public class Igrac {
 
-	//figure - lista figura
-	//ime - ime igraca
-	//izlazniStupovi - lista stupova koji predstavljaju cilj / kucicu
-	public Figura[] figure;
-	public string ime;
-	public GameObject[] izlazniStupovi;
+	/*----------------------------------------------Varijable----------------------------------------*/
+	public Figura[] figure;									//lista igračevih figura
+	public string ime;										//ime igrača
+	public GameObject[] izlazniStupovi;						//lista stupova koji čine kučicu
 
-	//public varijable skrivene u editoru/inspektoru
-	//izlazniStup - index zadnjeg stupa prije cilja / kucice
-	//ulazniStup - index prvog stupa / ulazna pozicija
-	//zadnjiSlobodanIzlazni - zadnji prazan stup u cilji, vrijednost 0 - 3, vrijednost ipod 0 ozačava pobjednika
-	//brojBacanja - preostali broj bacanja u trenutnom krugu
-	//prvoBacanje - provjerava je li igracevo prvo bacanje kockice
-	[HideInInspector]public int izlazniStup;
-	[HideInInspector]public int ulazniStup;
-	[HideInInspector]public int zadnjiSlobodanIzlazni;
-	[HideInInspector]public int brojBacanja = 1;
-	[HideInInspector]public bool prvoBacanje = true;
+	[HideInInspector]public int izlazniStup;				//index zadnjeg stupa prije kučice
+	[HideInInspector]public int ulazniStup;					//index prvog stupa / ulazne pozicije
+	[HideInInspector]public int zadnjiSlobodanIzlazni;		//index zadnjeg slobodnog stupa u kučici
+	[HideInInspector]public int brojBacanja = 1;			//preostali broj bacanja u trenutnom krugu
+	[HideInInspector]public bool prvoBacanje = true;		//oznaka je li trenutno igračev prvi krug
 }

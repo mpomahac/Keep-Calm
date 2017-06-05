@@ -4,29 +4,25 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour{
 
-	//target - objekt na koji se kamera fokusira
-	//offset - udaljenost kamere od objekta fokusa
-	//pozicijaKamere - trenutna pozicija kamere
-	//rotacija - zeljeni smjer pogleda kamere
-	//trenutnaRotacija - trenutni smjer pogleda kamere, koristi se isključivo za zoom na kocku
-	private GameObject target;
-	private Vector3 offset;
-	private Transform pozicijaKamere;
-	private Quaternion rotacija;
-	private Vector3 trenutnaRotacija;
+	/*---------------------------------------Privatne varijable---------------------------------------------*/
+	private GameObject target; 				//objekt na koji se kamera fokusira
+	private Vector3 offset;					//udaljenost kamere od objekta fokusa
+	private Transform pozicijaKamere;		//trenutna pozicija kamere
+	private Quaternion rotacija;			//željeni smjer pogleda kamere
+	private Vector3 trenutnaRotacija;		//trenutni smjer pogleda kamere (koristi se za zoom na kocku)
+	private Vector3 speed;					//brzina kamere prilikom kretanja, automatski se postavlja i mijenja
 
-	//referenca na trenutnu brzinu kamere prilikom kretanja
-	//vrijednost se postavlja / mijenja automatski
-	private Vector3 speed;
-
-	//postavlja zeljenu rotaciju na trenutnu
+	/*---------------------------------------------Metode---------------------------------------------------*/
+	//postavlja kameru na željenu rotaciju
 	void Start(){
-		rotacija = transform.rotation;
+		rotacija = transform.rotation;		
 	}
 
-	//pomice kameru na potrebnu poziciju tijekom cca. 0.5s i rotira ju prema centru
+	//funkcija koja se poziva svaki frame, služi za pomicanje kamere ovisno o fokusu i rotiranje kamere prema sredini
 	void Update () {
-		if (target.name == "Center") {
+
+		//if-elseif-else petlja za određivanje rotacije ovisno o postavljenom fokusu
+		if (target.name == "Center") {		
 			offset = new Vector3 (0, 17, -17);
 			rotacija.eulerAngles = new Vector3 (45, 0, 0);
 			trenutnaRotacija = new Vector3 (45, 0, 0);
@@ -59,11 +55,12 @@ public class CameraController : MonoBehaviour{
 			}
 		}
 
+		//glatko pomicanje kamere s jedne pozicije na drugu
 		transform.position = Vector3.SmoothDamp (transform.position, offset, ref speed, 0.5f);
 		transform.rotation = Quaternion.Slerp (transform.rotation, rotacija, 0.1f);
 	}
 
-	//prima novi objekt fokusa
+	//postavljanje novog fokusa
 	public void changeTarget(GameObject newTarget){
 		target = newTarget;
 	}
