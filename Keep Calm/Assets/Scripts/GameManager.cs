@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour {
 	public CameraController kamera;
 	public Kocka kocka;
 	public Dropdown dropdownListFigure;
-	public Text text;
 	public Text pobjedaText;
 	public Text trenutniIgracText;
 
@@ -38,10 +37,15 @@ public class GameManager : MonoBehaviour {
 	private bool gumbZaBacanje = false;
 	private int pomakniFiguru = -1;
 	private Igrac pobjednik=null;
-	private bool izlazak = true;
+	private int brojIgraca=0;
+	private GameObject buttonBaci;
 
 	//inicijalizacija
 	void Start () {
+
+		dropdownListFigure.gameObject.SetActive (false);
+		buttonBaci = GameObject.Find ("Button");
+		buttonBaci.SetActive (false);
 
 		//postavljanje pocetnih pozicija figura
 		for (int i = 0; i < 4; i++) {
@@ -60,10 +64,10 @@ public class GameManager : MonoBehaviour {
 		igrac [1].zadnjiSlobodanIzlazni = 3;
 		igrac [2].izlazniStup = 19;
 		igrac [2].ulazniStup = 21;
-		igrac [1].zadnjiSlobodanIzlazni = 3;
+		igrac [2].zadnjiSlobodanIzlazni = 3;
 		igrac [3].izlazniStup = 29;
 		igrac [3].ulazniStup = 31;
-		igrac [1].zadnjiSlobodanIzlazni = 3;
+		igrac [3].zadnjiSlobodanIzlazni = 3;
 
 		//postavljanje vremena cekanja
 		waitKocka = new WaitForSeconds (2);
@@ -71,6 +75,7 @@ public class GameManager : MonoBehaviour {
 		waitNakonPomaka = new WaitForSeconds (2f);
 		waitNakonReda = new WaitForSeconds (1.5f);
 
+		kamera.changeTarget (GameObject.Find ("Center"));
 
 		//pokretanje igre
 		StartCoroutine (gameloop ());
@@ -78,7 +83,11 @@ public class GameManager : MonoBehaviour {
 
 	//main funkcija
 	private IEnumerator gameloop(){
-		
+
+		while (brojIgraca == 0) {
+			yield return null;
+		}
+			
 		yield return StartCoroutine (turn ());
 
 		//pogledaj da li postoji pobjednik, ako da ipisi ga, ako ne idemo dalje
@@ -91,6 +100,24 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private IEnumerator turn(){
+		string colorString="ffffffff";
+		switch (trenutniIgrac) {
+		case 0:
+			colorString = "e00000ff";
+			break;
+		case 1:
+			colorString = "e0e000ff";
+			break;
+		case 2:
+			colorString = "00c000ff";
+			break;
+		case 3:
+			colorString = "0060ffff";
+			break;
+		}
+		trenutniIgracText.text ="Trenutno je na potezu <color=#"+colorString+">"+ igrac [trenutniIgrac].ime+"</color>";
+
+		kamera.changeTarget(GameObject.Find("FokusKamere"+igrac[trenutniIgrac].ime));
 
 		//cekaj da se stisne gumb za bacanje
 		while (!gumbZaBacanje) {
@@ -131,7 +158,6 @@ public class GameManager : MonoBehaviour {
 			//ako je na startu postavi ju na ulazni stup
 			if (igrac [trenutniIgrac].figure [pomakniFiguru].naStartu) {
 				float rotacija = (float)((trenutniIgrac - 1) * 90);
-				izlazak = true;
 				igrac [trenutniIgrac].figure [pomakniFiguru].move (put [igrac [trenutniIgrac].ulazniStup].transform, true);
 				igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup = igrac [trenutniIgrac].ulazniStup;
 				igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj(rotacija);
@@ -152,19 +178,24 @@ public class GameManager : MonoBehaviour {
 					igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup += 1;
 					if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup >= 40)
 						igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup = 0;
+					
 					for (int i = 0; i < 4; i++) {
 						if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 1 + i * 10) {
 							igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
+							yield return StartCoroutine (cekanjeReda ());
 						}
 						else if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 9 + i * 10) {
 							igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
+							yield return StartCoroutine (cekanjeReda ());
 						}
 						else if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 5 + i * 10) {
 							igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (-90.0f);
+							yield return StartCoroutine (cekanjeReda ());
 						}
 					}
 					if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == igrac [trenutniIgrac].izlazniStup) {
 						igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
+						yield return StartCoroutine (cekanjeReda ());
 					}
 					igrac [trenutniIgrac].figure [pomakniFiguru].move (put [igrac [trenutniIgrac].figure[pomakniFiguru].trenutniStup].transform, false);
 					yield return StartCoroutine (cekanjePomaka ());
@@ -185,12 +216,11 @@ public class GameManager : MonoBehaviour {
 		dropdownListFigure.value = 0;
 		dropdownListFigure.ClearOptions();
 		pomakniFiguru = -1;
-		kamera.changeTarget(GameObject.Find("Center"));
+		kamera.changeTarget(GameObject.Find("FokusKamere"+igrac[trenutniIgrac].ime));
 		yield return StartCoroutine (cekanjeKamere ());
-		if(brojMjesta != 6 || izlazak) trenutniIgrac++;
-		if (trenutniIgrac >= 4)
+		if(brojMjesta != 6) trenutniIgrac++;
+		if (trenutniIgrac >= brojIgraca)
 			trenutniIgrac = 0;
-		izlazak = false;
 		gumbZaBacanje = false;
 
 		//kraj funkcije, nazad u gameloop
@@ -201,7 +231,6 @@ public class GameManager : MonoBehaviour {
 		//pomakni kameru na kocku, odradi random, ispisi kolko je dobiveno na "kocki" jer jos nisam napravil da se kocka vrti
 		kamera.changeTarget (kocka.kocka);
 		brojMjesta = Random.Range (1, 7);
-		text.text = brojMjesta.ToString();
 		
 		//vrtnja kocke
 		kocka.rotiraj (1);
@@ -214,7 +243,7 @@ public class GameManager : MonoBehaviour {
 		kocka.rotiraj (0);
 		yield return waitKocka;
 
-		kamera.changeTarget(GameObject.Find("Center"));
+		kamera.changeTarget(GameObject.Find("FokusKamere"+igrac[trenutniIgrac].ime));
 	}
 		
 	private IEnumerator cekanjeKamere(){
@@ -303,5 +332,32 @@ public class GameManager : MonoBehaviour {
 				return igrac [i];
 		}
 		return null;
+	}
+
+	public void brojIgraca2(){
+		brojIgraca = 2;
+		GameObject.Find ("BrojIgraca2").SetActive (false);
+		GameObject.Find ("BrojIgraca3").SetActive (false);
+		GameObject.Find ("BrojIgraca4").SetActive (false);
+		buttonBaci.SetActive (true);
+		dropdownListFigure.gameObject.SetActive (true);
+	}
+
+	public void brojIgraca3(){
+		brojIgraca = 3;
+		GameObject.Find ("BrojIgraca2").SetActive (false);
+		GameObject.Find ("BrojIgraca3").SetActive (false);
+		GameObject.Find ("BrojIgraca4").SetActive (false);
+		buttonBaci.SetActive (true);
+		dropdownListFigure.gameObject.SetActive (true);
+	}
+
+	public void brojIgraca4(){
+		brojIgraca = 4;
+		GameObject.Find ("BrojIgraca2").SetActive (false);
+		GameObject.Find ("BrojIgraca3").SetActive (false);
+		GameObject.Find ("BrojIgraca4").SetActive (false);
+		buttonBaci.SetActive (true);
+		dropdownListFigure.gameObject.SetActive (true);
 	}
 }

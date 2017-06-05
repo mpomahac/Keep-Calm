@@ -18,8 +18,10 @@ public class Figura :MonoBehaviour{
 	[HideInInspector]public int trenutniStup = -1;
 	[HideInInspector]public float udaljenostX;
 	[HideInInspector]public float udaljenostZ;
-	[HideInInspector]private Animator anim;
-	[HideInInspector]private bool ulaz = true;
+
+	private Animator anim;
+	private bool ulaz = true;
+	private Quaternion ciljnaRotacija;
 
 	//referenca na trenutnu brzinu figure prilikom kretanja
 	//vrijednost se postavlja / mijenja automatski
@@ -27,6 +29,7 @@ public class Figura :MonoBehaviour{
 
 	void Start(){
 		anim = GetComponent<Animator> ();
+		ciljnaRotacija = transform.rotation;
 	}
 
 	//primanje nove pozicije
@@ -56,13 +59,15 @@ public class Figura :MonoBehaviour{
 				anim.SetBool ("Move", false);
 			}
 		}
+
+		//rotiranje
+		transform.rotation = Quaternion.Slerp (transform.rotation,ciljnaRotacija,0.15f);
 	}
 
 	public void reset(){
 		transform.position = startPozicija;
-		transform.rotation.eulerAngles = new Vector3 (0, 0, 0);
-		rotiraj (-transform.rotation.eulerAngles.y);
 		zeljenaPozicija = startPozicija;
+		transform.eulerAngles = new Vector3 (0, 0, 0);
 		naStartu = true;
 		trenutniStup = -1;
 	}
@@ -74,6 +79,6 @@ public class Figura :MonoBehaviour{
 
 	public void rotiraj(float stupnjevi){
 		anim.SetBool ("Move", false);
-		this.transform.Rotate (0, stupnjevi, 0);
+		ciljnaRotacija.eulerAngles = new Vector3 (0, transform.eulerAngles.y+stupnjevi, 0);
 	}
 }
