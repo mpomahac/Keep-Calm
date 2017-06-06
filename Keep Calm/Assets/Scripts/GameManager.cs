@@ -259,7 +259,18 @@ public class GameManager : MonoBehaviour {
 
 					//pomicanje figure dok ne dođe do zadnjeg stupa prije kučice
 					for (int x = 1; x <= brojMjesta; x++) {
-						
+
+						//rotiranje figure ako je na specifičnom stupu
+						for (int i = 0; i < 4; i++) {
+							if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 1 + i * 10) {
+								igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
+								yield return StartCoroutine (cekanjeReda ());
+							} else if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == 5 + i * 10) {
+								igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (-90.0f);
+								yield return StartCoroutine (cekanjeReda ());
+							}
+						}
+
 						//prekid pomicanja figure i rotiranje figure prema kučici ako je na zadnjem stupu prije kučice
 						if (igrac [trenutniIgrac].figure [pomakniFiguru].trenutniStup == igrac [trenutniIgrac].izlazniStup) {
 							igrac [trenutniIgrac].figure [pomakniFiguru].rotiraj (90.0f);
